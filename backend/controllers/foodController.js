@@ -7,12 +7,19 @@ const addFood = async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ success: false, message: "Image upload failed" });
     }
+
+    console.log(req.body);
+
+    if (!req.body.name || !req.body.price || !req.body.category || !req.body.description) {
+      return res.status(400).json({ success: false, message: "Missing required fields" });
+    }
   
     const image_filename = req.file.filename;
-  
+
     const food = new foodModel({
       name: req.body.name,
       description: req.body.description,
+      price: req.body.price,
       category: req.body.category,
       image: image_filename,
     });
